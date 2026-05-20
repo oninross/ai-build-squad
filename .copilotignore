@@ -1,0 +1,23 @@
+# Dependency caches and installs
+node_modules/
+
+# Build outputs
+dist/
+build/
+storybook-static/
+.mastra/build/
+
+# Test and coverage artifacts
+coverage/
+playwright-report/
+test-results/
+
+# Lockfiles (exclude from Copilot context to reduce token usage)
+package-lock.json
+pnpm-lock.yaml
+yarn.lock
+bun.lockb
+
+# Generated maps and logs
+*.map
+*.log
