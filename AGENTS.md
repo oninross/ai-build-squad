@@ -47,7 +47,7 @@ These commands are available to all agents for inspection, validation, and execu
 
 1. Collect component metadata interactively (one question per prompt)
 2. Scan workspace for framework configurations (Storybook, Vitest, Jest)
-3. Validate design token file existence (`src/app/styles/variables.css`)
+3. Validate design token file existence (`src/styles/variables.css`)
 4. Check Shadcn/ui configuration if applicable
 5. Validate Figma URL format and accessibility
 6. Emit DiscoveryPayload to React Developer Agent
@@ -129,7 +129,7 @@ When generating a new component, the React Developer Agent always follows this s
 
 Before generating any component code:
 
-1. **Token File Check**: Business Analyst Agent confirms `src/app/styles/variables.css` exists (via DISCOVERY state).
+1. **Token File Check**: Business Analyst Agent confirms `src/styles/variables.css` exists (via DISCOVERY state).
 2. **If Missing**: React Developer Agent creates it immediately with this starter template:
 
 ```css
@@ -195,7 +195,7 @@ React Developer Agent generates files in this sequence:
    - Default export the component
 
 3. **Button.styles.scss** - BEM styles with design tokens
-   - Use CSS variables from `src/app/styles/variables.css`
+   - Use CSS variables from `src/styles/variables.css`
    - No hardcoded values
    - Block naming: `.button`
    - Element naming: `.button__icon`
@@ -321,7 +321,7 @@ Create a story file for every component, for example Button.stories.tsx with pri
 
 QA Agent validates component against this checklist before approving release:
 
-- [ ] src/app/styles/variables.css exists
+- [ ] src/styles/variables.css exists
 - [ ] Required component files created (types, tsx, styles, test, index, stories)
 - [ ] BEM methodology used in styles (.block, .block\_\_element, .block--modifier)
 - [ ] Styles use design tokens (no hardcoded values)
@@ -337,14 +337,3 @@ QA Agent validates component against this checklist before approving release:
 
 - If all items checked ✅: Approve component for release
 - If any items unchecked ❌: Reject and route back to React Developer Agent for correction
-
-- [ ] src/app/styles/variables.css exists
-- [ ] Required component files created
-- [ ] BEM methodology used
-- [ ] Styles use design tokens
-- [ ] TypeScript strict checks pass
-- [ ] Tests are written and passing
-- [ ] Storybook story is created
-- [ ] Component exported via barrel file
-- [ ] ESLint passes
-- [ ] Prettier formatting applied

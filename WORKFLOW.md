@@ -137,7 +137,7 @@ interface IntakePayload {
    - If user does not want tests: `status = "SKIP"`
 
 3. Check for Design Tokens:
-   - Scan for `src/app/styles/variables.css`
+   - Scan for `src/styles/variables.css`
    - If found: `tokensStatus = "FOUND"`
    - If not found: `tokensStatus = "MISSING"` (warn; will be created during execution per AGENTS.md requirements)
 
@@ -305,7 +305,7 @@ interface GenerationContract {
    - If shadcnHint exists: run `npx shadcn@latest add [primitive]`
    - If storybookStatus = "INSTALL_FRAMEWORK": run `npm install -D storybook`
    - If testingStatus = "INSTALL_FRAMEWORK": run `npm install -D vitest`
-   - If tokensStatus = "MISSING": create `src/app/styles/variables.css` with starter template per AGENTS.md Step 1
+   - If tokensStatus = "MISSING": create `src/styles/variables.css` with starter template per AGENTS.md Step 1
 
 2. **Folder Scaffolding Phase:**
    - Create directory: `src/components/[Category]/[ComponentName]/`
@@ -426,7 +426,7 @@ interface ValidationResult {
    - Review validation results from Tester Agent
    - Evaluate risk assessment (all checks passed, no exceptions)
    - Confirm artifact compliance with AGENTS.md pre-submission checklist:
-     - [ ] `src/app/styles/variables.css` exists
+     - [ ] `src/styles/variables.css` exists
      - [ ] Required component files created
      - [ ] BEM methodology used in styles
      - [ ] Styles use design tokens (no hardcoded values)
@@ -558,7 +558,7 @@ User Gets Actionable Feedback
   "maxCorrectionAttempts": 3,
   "defaultCategory": "atom",
   "componentsRoot": "src/components",
-  "designTokensPath": "src/app/styles/variables.css",
+  "designTokensPath": "src/styles/variables.css",
   "interactiveMode": true
 }
 ```
