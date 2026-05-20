@@ -6,8 +6,6 @@ describe("App", () => {
   it("renders scaffold headline", () => {
     render(<App />);
 
-    expect(
-      screen.getByRole("heading", { name: /ai build squad scaffold/i }),
-    ).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: /ai build squad scaffold/i })).toBeInTheDocument();
   });
 });
