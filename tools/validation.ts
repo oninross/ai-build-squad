@@ -12,28 +12,21 @@ import type {
 export const DEFAULT_VALIDATION_COMMANDS: ValidationCommand[] = [
   { tool: "typecheck", command: "npm run typecheck" },
   { tool: "lint", command: "npm run lint" },
-  { tool: "test", command: "npm run test" },
+  { tool: "test", command: "npm run test:coverage" },
 ];
 
-export type CommandExecutor = (
-  command: string,
-) => Promise<CommandExecutionResult>;
+export type CommandExecutor = (command: string) => Promise<CommandExecutionResult>;
 
 export type LogPersister = (artifact: ValidationLogArtifact) => Promise<void>;
 
-export type CorrectionApplier = (
-  feedback: ValidationFeedbackPayload,
-) => Promise<void>;
+export type CorrectionApplier = (feedback: ValidationFeedbackPayload) => Promise<void>;
 
 function normalizeOutput(stdout: string, stderr: string): string {
   const merged = [stdout.trim(), stderr.trim()].filter(Boolean).join("\n");
   return merged.replace(/\r\n/g, "\n");
 }
 
-function toToolResult(
-  tool: ValidationTool,
-  result: CommandExecutionResult,
-): ToolValidationResult {
+function toToolResult(tool: ValidationTool, result: CommandExecutionResult): ToolValidationResult {
   return {
     tool,
     command: result.command,
@@ -48,7 +41,7 @@ function toToolResult(
 
 export async function executeValidationTools(
   executeCommand: CommandExecutor,
-  commands: ValidationCommand[] = DEFAULT_VALIDATION_COMMANDS,
+  commands: ValidationCommand[] = DEFAULT_VALIDATION_COMMANDS
 ): Promise<ValidationExecutionReport> {
   const start = Date.now();
   const startedAt = new Date(start).toISOString();
@@ -71,7 +64,7 @@ export async function executeValidationTools(
 
 export function buildValidationFeedbackPayload(
   report: ValidationExecutionReport,
-  attempt: number,
+  attempt: number
 ): ValidationFeedbackPayload {
   const failedResults = report.results.filter((result) => !result.passed);
   const failedTools = failedResults.map((result) => result.tool);
@@ -95,7 +88,7 @@ export function buildValidationFeedbackPayload(
 export function buildValidationLogArtifacts(
   report: ValidationExecutionReport,
   runId: string,
-  attempt: number,
+  attempt: number
 ): ValidationLogArtifact[] {
   const basePath = `.ai-build-squad/runs/${runId}/attempt-${attempt}`;
 
@@ -116,7 +109,7 @@ export async function persistValidationLogs(
   report: ValidationExecutionReport,
   runId: string,
   attempt: number,
-  persistLog: LogPersister,
+  persistLog: LogPersister
 ): Promise<void> {
   const artifacts = buildValidationLogArtifacts(report, runId, attempt);
   for (const artifact of artifacts) {
@@ -133,7 +126,7 @@ export interface CorrectionLoopInput {
 }
 
 export async function runValidationCorrectionLoop(
-  input: CorrectionLoopInput,
+  input: CorrectionLoopInput
 ): Promise<CorrectionLoopResult> {
   const maxAttempts = input.maxAttempts ?? 3;
   const reports: ValidationExecutionReport[] = [];

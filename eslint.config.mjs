@@ -8,13 +8,20 @@ export default [
     ignores: ["node_modules/**", "dist/**", "storybook-static/**", "coverage/**"],
   },
   {
-    files: ["src/**/*.{ts,tsx}", "stories/**/*.{ts,tsx}"],
+    files: [
+      "src/**/*.{ts,tsx}",
+      "stories/**/*.{ts,tsx}",
+      "tools/**/*.ts",
+      "vite.config.ts",
+      "playwright.config.ts",
+      "vitest.setup.ts",
+    ],
     languageOptions: {
       parser: tsParser,
       parserOptions: {
         ecmaVersion: "latest",
         sourceType: "module",
-        project: "./tsconfig.app.json",
+        project: ["./tsconfig.app.json", "./tsconfig.node.json", "./tools/tsconfig.json"],
       },
     },
     plugins: {

@@ -9,7 +9,7 @@
     "build": "vite build",
     "preview": "vite preview",
     "worktree:create": "node tools/create-worktree.mjs",
-    "typecheck": "tsc -p tsconfig.app.json --noEmit",
+    "typecheck": "tsc -p tsconfig.app.json --noEmit && tsc -p tsconfig.node.json --noEmit && tsc -p tools/tsconfig.json --noEmit",
     "test": "vitest run",
     "test:watch": "vitest",
     "test:coverage": "vitest run --coverage",

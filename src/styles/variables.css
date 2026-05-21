@@ -1,2 +1,15 @@
 :root {
+  --color-background-canvas: #f4f7f6;
+  --color-text-primary: #11251f;
+  --color-surface-card: #ffffff;
+
+  --spacing-page-sm: 2rem;
+  --radius-card-md: 0.75rem;
+  --content-width-lg: 48rem;
+
+  --font-family-app: "Avenir Next", "Segoe UI", sans-serif;
+  --font-size-heading-fluid: clamp(1.6rem, 2vw, 2rem);
+  --line-height-body: 1.5;
+
+  --shadow-elevated-card: 0 10px 30px rgba(17, 37, 31, 0.08);
 }

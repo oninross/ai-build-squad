@@ -1,11 +1,7 @@
-$bg: #f4f7f6;
-$text: #11251f;
-$card: #ffffff;
-
 :root {
-  color: $text;
-  background: $bg;
-  font-family: "Avenir Next", "Segoe UI", sans-serif;
+  color: var(--color-text-primary);
+  background: var(--color-background-canvas);
+  font-family: var(--font-family-app);
 }
 
 * {
@@ -18,20 +14,20 @@ body {
 }
 
 .app-shell {
-  margin: 2rem auto;
-  max-width: 48rem;
-  padding: 2rem;
-  border-radius: 0.75rem;
-  background: $card;
-  box-shadow: 0 10px 30px rgba(17, 37, 31, 0.08);
+  margin: var(--spacing-page-sm) auto;
+  max-width: var(--content-width-lg);
+  padding: var(--spacing-page-sm);
+  border-radius: var(--radius-card-md);
+  background: var(--color-surface-card);
+  box-shadow: var(--shadow-elevated-card);
 
   h1 {
     margin: 0 0 0.75rem;
-    font-size: clamp(1.6rem, 2vw, 2rem);
+    font-size: var(--font-size-heading-fluid);
   }
 
   p {
     margin: 0;
-    line-height: 1.5;
+    line-height: var(--line-height-body);
   }
 }
