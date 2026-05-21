@@ -86,7 +86,15 @@ if (!agentName || !componentName) {
 const repoRoot = process.cwd();
 const agentSlug = slugify(agentName);
 const componentSlug = slugify(componentName);
-const baseRef = args.base || "main";
+function getCurrentBranch(repoRoot) {
+  try {
+    return runGit(repoRoot, ["branch", "--show-current"]);
+  } catch {
+    return "main";
+  }
+}
+
+const baseRef = args.base || getCurrentBranch(repoRoot) || "main";
 const branchName = args.branch || `feature/${agentSlug}-${componentSlug}`;
 const worktreePath = path.resolve(
   repoRoot,

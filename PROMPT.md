@@ -70,7 +70,8 @@ After all squads return:
 
 1. Merge new CSS variables from worktrees into main `src/styles/variables.css` (resolve conflicts).
 2. Verify no two squads wrote to the same component folder.
-3. Emit `MultiSquadReport`:
+3. Remove each squad worktree after aggregation using `npm run worktree:remove -- --agent squad-<N> --component <component-slug>` (use `--force` only when cleanup is blocked by local changes).
+4. Emit `MultiSquadReport`:
 
 ```
 runMode: MULTI_SQUAD

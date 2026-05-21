@@ -352,6 +352,7 @@ interface GenerationContract {
    - Format all generated files: `npm run format` (Prettier)
    - Verify no lint errors (files should follow ESLint standards)
    - Confirm all files exist and are non-empty
+  - If this run used a dedicated parallel worktree, remove it after aggregation is complete with `npm run worktree:remove -- --agent <agent-name> --component <component-name>`
 
 **Code Standards (AGENTS.md Mandates):**
 
