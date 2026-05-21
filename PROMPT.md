@@ -59,6 +59,7 @@ Each squad receives a **Squad Charter**:
 
 ```
 squadId, componentName, category, figmaLink, useShadcn,
+getDesignContext: { fileKey, nodeId, artifactType, taskType },
 storybook.desired, testing.desired,
 branch, worktreePath, sharedTokenSnapshot
 ```
@@ -133,8 +134,14 @@ Pass criteria: coverage ≥ 80%, all checks green. Max 3 correction attempts; ro
 Components to build:
 
 1. [COMPONENT 1 SPECIFICATION]
+   @get_design_context [https://www.figma.com/design/...?...]
+   - useShadcn: [true|false]
 2. [COMPONENT 2 SPECIFICATION]
+   @get_design_context [https://www.figma.com/design/...?...]
+   - useShadcn: [true|false]
 3. [ADD OR REMOVE ENTRIES AS NEEDED]
+   @get_design_context [https://www.figma.com/design/...?...]
+   - useShadcn: [true|false]
 
 Intake defaults (applied when not specified per component):
 
