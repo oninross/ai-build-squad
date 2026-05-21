@@ -8,6 +8,14 @@ This document defines the executable workflow schema for the AI Build Squad comp
 
 The pipeline orchestrates component generation through seven sequential states via a **Build Squad Coordinator** that delegates to specialized agents (Business Analyst, React Developer, Tester, QA). Each agent contributes domain expertise while maintaining deterministic workflows with guardrails and conditional branching. The workflow accepts both interactive and batch inputs.
 
+## End-to-End Automation Policy
+
+- The pipeline must complete in one coordinator run when repository/tool access is available.
+- "Manual implementation required" is not a terminal state.
+- If a delegated agent cannot perform file edits or command execution, the coordinator must apply the delegated output directly and continue.
+- Tooling limitations in a subagent context are treated as recoverable and must not require user copy/paste handoff.
+- Coordinator completion requires all four contracts: `DiscoveryPayload`, `ExecutionResult`, `ValidationResult`, `PipelineRunReport`.
+
 ## Testing Strategy
 
 **Primary (Validation Gate):** Vitest + React Testing Library
@@ -54,6 +62,12 @@ Build Squad Coordinator
     ↓
 Final Report & Artifacts
 ```
+
+**Parallelization Rules:**
+
+- Stage ownership remains fixed, but coordinator may run compatible read-only discovery tasks in parallel.
+- For concurrent generation tracks, each React Developer execution must run in its own branch/worktree.
+- Validation and QA for each track must complete before aggregate final approval.
 
 ---
 
@@ -365,6 +379,10 @@ interface ExecutionResult {
 
 **Guard:** If any write fails or CGA returns invalid output, emit error and trigger rollback.
 
+**Automation Fallback Rule:**
+
+- If React Developer Agent returns code artifacts but cannot persist them due to tool context limits, coordinator must persist artifacts directly, run formatting, and transition to VALIDATION without user intervention.
+
 **Next State:** VALIDATION
 
 ---
@@ -423,6 +441,10 @@ interface ValidationResult {
 
 **Guard:** Halt if any gate fails after max retries.
 
+**Automation Fallback Rule:**
+
+- If Tester Agent cannot execute commands in its subagent context, coordinator must run the same validation commands and provide equivalent `ValidationResult` evidence.
+
 **Next State:** OUTPUT (if PASSED) or EXIT (if FAILED)
 
 ---
@@ -432,6 +454,10 @@ interface ValidationResult {
 **Owned By:** QA Agent
 
 **Purpose:** Approve validated artifacts, persist results, generate comprehensive report, and sign off on component readiness.
+
+**Automation Fallback Rule:**
+
+- If QA Agent cannot compute report fields directly, coordinator must compile and emit `PipelineRunReport` from validated upstream contracts.
 
 **Tasks:**
 

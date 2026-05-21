@@ -39,6 +39,13 @@ These commands are available to all agents for inspection, validation, and execu
 
 ## 2. Agent Responsibilities & Handoff Protocol
 
+### End-to-End Automation Policy (All Agents)
+
+- Do not stop pipeline execution with "manual implementation required" when coordinator tool access can complete the step.
+- If a delegated agent cannot edit files or run commands in its own context, it must return machine-applicable artifacts/commands and the coordinator must execute them in the same run.
+- Subagent tool limitations are recoverable conditions, not terminal blockers.
+- A run is complete only when DiscoveryPayload, ExecutionResult, ValidationResult, and PipelineRunReport are all emitted.
+
 ### Business Analyst Agent (INTAKE → DISCOVERY)
 
 **States Owned:** INTAKE, DISCOVERY

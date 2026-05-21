@@ -116,3 +116,11 @@ Intake Defaults (if not specified in the feature specification):
 - Playwright is optional downstream quality validation, not a blocking generation gate.
 - Keep execution deterministic and halt on contract violations.
 - Provide a concise final report with generated artifacts and QA decision.
+
+### Automation Enforcement (Mandatory)
+
+- End-to-end automation is required. Do not stop at "manual implementation required".
+- If any delegated agent lacks edit/execute capability in its context, Build Squad Coordinator must apply generated artifacts directly and continue the same run.
+- Subagent tool limitations are recoverable; do not ask the user to copy/paste generated files.
+- Continue automatically through VALIDATION and OUTPUT after applying artifacts.
+- Final response must include all contracts: `DiscoveryPayload`, `ExecutionResult`, `ValidationResult`, `PipelineRunReport`.
