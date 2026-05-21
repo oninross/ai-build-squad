@@ -67,10 +67,12 @@ These commands are available to all agents for inspection, validation, and execu
 
 1. Fetch design context from Figma via MCP
 2. Build generation contract from design + AGENTS.md mandates
-3. Scaffold component folder structure
-4. Generate all required component files (see Step 3 below)
-5. Format code with Prettier
-6. Emit ExecutionResult to Tester Agent
+3. Create and use isolated git worktrees when running component generation in parallel
+4. Audit existing color tokens and hex values before introducing new color variables
+5. Scaffold component folder structure
+6. Generate all required component files (see Step 3 below)
+7. Format code with Prettier
+8. Emit ExecutionResult to Tester Agent
 
 **Handoff Output:** `ExecutionResult` containing:
 
@@ -130,7 +132,12 @@ When generating a new component, the React Developer Agent always follows this s
 Before generating any component code:
 
 1. **Token File Check**: Business Analyst Agent confirms `src/styles/variables.css` exists (via DISCOVERY state).
-2. **If Missing**: React Developer Agent creates it immediately with this starter template:
+2. **Color Token Audit**: React Developer Agent scans existing token and style files for matching hex values before adding any new color variable.
+   - Reuse an existing variable when the target hex value is already represented in the codebase.
+   - If the same hex value is used or needed by more than one component, rename the variable to a generic shared name instead of a component-specific name.
+   - Update existing references when renaming so all shared usages resolve through the same generic token.
+   - Prefer semantic names such as `--color-success-soft-bg` over component-scoped names such as `--pill-badge-success-bg` when the color is shared.
+3. **If Missing**: React Developer Agent creates it immediately with this starter template:
 
 ```css
 :root {
@@ -158,6 +165,16 @@ Before generating any component code:
   --font-weight-bold: 700;
 }
 ```
+
+### Step 1A: Create an Isolated Git Worktree for Parallel Runs
+
+When multiple agents are generating components simultaneously:
+
+1. **Create a Dedicated Branch**: Create a unique branch for each agent run if one does not already exist.
+2. **Create a Dedicated Worktree**: Use `git worktree add` to create a separate working directory for that branch.
+   - Example: `git worktree add ../ai-build-squad-agent1 feature/agent1-button`
+3. **Run in Isolation**: Perform all file generation, formatting, and validation steps inside the assigned worktree directory.
+4. **Coordinate Integration**: After the agent finishes, merge the branch or otherwise coordinate integration through the Build Squad Coordinator.
 
 ### Step 2: Scaffold Component Folder
 

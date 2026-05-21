@@ -241,15 +241,23 @@ interface PlanningInput extends DiscoveryPayload {
 
 3. Design token validation:
    - If tokensStatus = "MISSING": include design token file creation step (use AGENTS.md template)
-   - Map design tokens from Figma to CSS variable names
-   - Validate BEM selector naming convention
+
+- Reuse existing token variables when matching hex values already exist in the repository
+- If a color is shared across components, generalize the token name and update references in the plan
+- Map design tokens from Figma to CSS variable names
+- Validate BEM selector naming convention
 
 4. Framework prerequisites:
    - If useShadcn and shadcnHint exists: include Shadcn primitive installation
    - If storybookStatus = "INSTALL_FRAMEWORK": include Storybook init step
    - If testingStatus = "INSTALL_FRAMEWORK": include Vitest init step
 
-5. Build single execution order (install, scaffold, generate, validate, format)
+5. If parallel execution is requested, add a pre-generation step to create a dedicated branch and git worktree for the run using `npm run worktree:create -- --agent <agent-name> --component <component-name>`
+
+- Branch naming convention: `feature/<agent-slug>-<component-slug>`
+- Worktree path convention: `../ai-build-squad-<agent-slug>-<component-slug>`
+
+6. Build single execution order (install, scaffold, generate, validate, format)
 
 **Output Type:**
 
@@ -301,11 +309,16 @@ interface GenerationContract {
 **Tasks:**
 
 1. **Pre-Generation Phase:**
-   - If shadcnStatus = "NEEDS_INIT": run `npx shadcn@latest init`
-   - If shadcnHint exists: run `npx shadcn@latest add [primitive]`
-   - If storybookStatus = "INSTALL_FRAMEWORK": run `npm install -D storybook`
-   - If testingStatus = "INSTALL_FRAMEWORK": run `npm install -D vitest`
-   - If tokensStatus = "MISSING": create `src/styles/variables.css` with starter template per AGENTS.md Step 1
+
+- If parallel execution is requested: create a dedicated branch for the run if it does not exist
+- If parallel execution is requested: create a dedicated git worktree with `npm run worktree:create -- --agent <agent-name> --component <component-name>` and execute the remaining steps inside that worktree
+- If shadcnStatus = "NEEDS_INIT": run `npx shadcn@latest init`
+- If shadcnHint exists: run `npx shadcn@latest add [primitive]`
+- If storybookStatus = "INSTALL_FRAMEWORK": run `npm install -D storybook`
+- If testingStatus = "INSTALL_FRAMEWORK": run `npm install -D vitest`
+- If tokensStatus = "MISSING": create `src/styles/variables.css` with starter template per AGENTS.md Step 1
+- Before adding new color tokens, scan for existing matching hex values and reuse them where possible
+- If a reused color now spans multiple components, rename the token to a generic semantic name and update references
 
 2. **Folder Scaffolding Phase:**
    - Create directory: `src/components/[Category]/[ComponentName]/`

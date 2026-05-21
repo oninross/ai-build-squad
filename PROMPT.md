@@ -50,6 +50,9 @@ You are the Build Squad Coordinator. Orchestrate the component request through t
 ### Component Generation Rules (Must Enforce)
 
 - Component folder root: src/components/[atoms|molecules|organisms]/[ComponentName]/
+- When running multiple executions in parallel, each execution must use its own branch and git worktree directory.
+- Preferred command: `npm run worktree:create -- --agent <agent-name> --component <component-name>`
+- Naming convention: branch = `feature/<agent-slug>-<component-slug>`, path = `../ai-build-squad-<agent-slug>-<component-slug>`
 - Required files:
   - ComponentName.types.ts
   - ComponentName.tsx
@@ -63,6 +66,8 @@ You are the Build Squad Coordinator. Orchestrate the component request through t
 - No CSS Modules
 - No dangerouslySetInnerHTML
 - Use design tokens from src/styles/variables.css (create if missing)
+- Reuse existing color variables when the same hex value already exists in the repository
+- If a color token is shared across multiple components, rename it to a generic semantic token and update references
 
 ### Validation Gate Requirements
 
