@@ -23,7 +23,7 @@ These commands are available to all agents for inspection, validation, and execu
 | npm install             | Install all dependencies               | Coordinator, React Dev |
 | npm run storybook       | Start Storybook dev server (port 6006) | React Dev, Tester      |
 | npm run build-storybook | Build static Storybook                 | React Dev              |
-| npm run build           | Build component library with Rollup    | React Dev              |
+| npm run build           | Build project with Vite                | React Dev              |
 | npx vitest              | Run unit tests with Vitest             | Tester                 |
 | npm run lint            | Lint source files with ESLint          | Tester                 |
 | npm run format          | Format code with Prettier              | React Dev              |

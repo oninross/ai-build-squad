@@ -145,7 +145,7 @@ interface IntakePayload {
    - If user does not want stories: `status = "SKIP"`
 
 2. Check for Testing Framework:
-   - Scan for `vitest.config.ts` or `jest.config.js`
+  - Scan for `vitest.config.ts`, `vite.config.ts` with a `test` block, or `jest.config.js`
    - If found: `testingStatus = "PROCEED"`
    - If not found and user wants tests: Ask to install; if yes, `status = "INSTALL_FRAMEWORK"`; if no, `status = "SKIP"`
    - If user does not want tests: `status = "SKIP"`
