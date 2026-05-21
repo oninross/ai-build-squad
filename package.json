@@ -17,7 +17,7 @@
     "test:e2e:ui": "playwright test --ui",
     "lint": "eslint",
     "lint:fix": "eslint --fix",
-    "format": "prettier --write \"src/**/*.{ts,tsx,scss,css}\"",
+    "format": "prettier --write \"{src,stories,tests,tools,.storybook}/**/*.{ts,tsx,scss,css,md,mdx}\" \"*.{md,ts,tsx,js,mjs,cjs,json,yml,yaml}\" \".github/workflows/**/*.{yml,yaml}\"",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build"
   },
