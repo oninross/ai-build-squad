@@ -71,8 +71,9 @@ After all squads return:
 
 1. Merge new CSS variables from worktrees into main `src/styles/variables.css` (resolve conflicts).
 2. Verify no two squads wrote to the same component folder.
-3. Remove each squad worktree after aggregation using `npm run worktree:remove -- --agent squad-<N> --component <component-slug>` (use `--force` only when cleanup is blocked by local changes).
-4. Emit `MultiSquadReport`:
+3. Before any worktree deletion, sync each completed component back to Figma using Figma Connect (Code Connect) for the component's `getDesignContext` target.
+4. Remove each squad worktree only after successful Figma Connect sync using `npm run worktree:remove -- --agent squad-<N> --component <component-slug>` (use `--force` only when cleanup is blocked by local changes).
+5. Emit `MultiSquadReport`:
 
 ```
 runMode: MULTI_SQUAD
@@ -90,6 +91,7 @@ totalDuration, coordinatorNotes
 `DiscoveryPayload`: componentName, category, useShadcn, figmaLink, storybookStatus, testingStatus, tokensStatus, shadcnStatus
 `ExecutionResult`: generatedFiles (path+size), success, errors/warnings
 `ValidationResult`: typecheck/lint/test pass-fail, coverage %, correctionAttempts (max 3), finalStatus
+`FigmaConnectSyncResult`: componentName, fileKey, nodeId, syncStatus (SYNCED|FAILED), syncNotes
 `PipelineRunReport`: all stage summaries, artifact list, qaApproval (APPROVED|REJECTED), duration
 
 ---
@@ -122,6 +124,7 @@ Pass criteria: coverage ≥ 80%, all checks green. Max 3 correction attempts; ro
 - No "manual implementation required" stops. If a subagent can't write files, the Coordinator applies artifacts and continues.
 - Subagent tool limitations are recoverable, not blockers.
 - Multi-Squad: dispatch all squads before awaiting any result.
+- Multi-Squad: Figma Connect sync is required before any squad worktree is removed.
 - Use Vitest + React Testing Library. Playwright is optional, not a blocking gate.
 
 ---
